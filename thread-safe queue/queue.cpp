@@ -1,9 +1,8 @@
 #include "queue.h"
-#include <cstring>   // memcpy
-#include <cstdlib>   // malloc, free
+#include <cstring>
+#include <cstdlib>
 #include <mutex>
 
-// 유틸: value 깊은 복사
 char* deep_copy_value(const char* value, int size) {
     if (!value || size <= 0) return nullptr;
     char* copy = (char*)malloc(size);
@@ -39,13 +38,10 @@ Reply enqueue(Queue* queue, Item item) {
 
     std::lock_guard<std::mutex> lock(queue->mtx);
 
-    // 이미 존재하는 key면 value만 덮어쓰기
     Node* curr = queue->head;
     while (curr) {
         if (curr->item.key == item.key) {
-            // 기존 value 메모리 해제
             if (curr->item.value) free(curr->item.value);
-            // 새로운 value 깊은 복사
             curr->item.value = deep_copy_value(item.value, item.value_size);
             curr->item.value_size = item.value_size;
 
@@ -58,14 +54,12 @@ Reply enqueue(Queue* queue, Item item) {
         curr = curr->next;
     }
 
-    // 새로운 노드 생성
     Node* new_node = new Node;
     new_node->item.key = item.key;
     new_node->item.value = deep_copy_value(item.value, item.value_size);
     new_node->item.value_size = item.value_size;
     new_node->next = nullptr;
 
-    // 삽입 위치 탐색 (우선순위 큐: key 오름차순)
     if (!queue->head || item.key < queue->head->item.key) {
         new_node->next = queue->head;
         queue->head = new_node;
