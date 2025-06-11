@@ -56,7 +56,7 @@ Reply enqueue(Queue* queue, Item item) {
 
     Node* new_node = new Node;
     new_node->item.key = item.key;
-    new_node->item.value = deep_copy_value(item.value, item.value_size);
+    //new_node->item.value = deep_copy_value(item.value, item.value_size);//
     new_node->item.value_size = item.value_size;
     new_node->next = nullptr;
 
