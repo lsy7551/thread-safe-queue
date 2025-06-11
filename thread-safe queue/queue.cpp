@@ -42,7 +42,7 @@ Reply enqueue(Queue* queue, Item item) {
     while (curr) {
         if (curr->item.key == item.key) {
             if (curr->item.value) free(curr->item.value);
-            //curr->item.value = deep_copy_value(item.value, item.value_size);//
+            curr->item.value = deep_copy_value(item.value, item.value_size);
             curr->item.value_size = item.value_size;
 
             reply.success = true;
