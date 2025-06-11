@@ -115,7 +115,7 @@ Queue* range(Queue* queue, Key start, Key end) {
             copy.key = curr->item.key;
             copy.value_size = curr->item.value_size;
             copy.value = deep_copy_value(curr->item.value, copy.value_size);
-            enqueue(result, copy);
+            //enqueue(result, copy);//
         }
         curr = curr->next;
     }
