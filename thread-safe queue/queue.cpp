@@ -96,7 +96,7 @@ Reply dequeue(Queue* queue) {
     reply.success = true;
     reply.item.key = temp->item.key;
     reply.item.value_size = temp->item.value_size;
-    //reply.item.value = deep_copy_value(temp->item.value, temp->item.value_size);//
+    reply.item.value = deep_copy_value(temp->item.value, temp->item.value_size);
 
     if (temp->item.value) free(temp->item.value);
     delete temp;
