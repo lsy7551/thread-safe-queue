@@ -32,12 +32,15 @@ void release(Queue* queue) {
     delete queue;
 }
 
+// 우선순위 큐에 노드를 삽입
+// 중복되면 기존 노드의 value를 새로운 값으로 교체
 Reply enqueue(Queue* queue, Item item) {
     Reply reply;
     reply.success = false;
 
     std::lock_guard<std::mutex> lock(queue->mtx);
 
+    // key 중복 시 value 교체
     Node* curr = queue->head;
     while (curr) {
         if (curr->item.key == item.key) {
@@ -54,6 +57,7 @@ Reply enqueue(Queue* queue, Item item) {
         curr = curr->next;
     }
 
+    // 새로운 노드 생성 및 정렬 삽입
     Node* new_node = new Node;
     new_node->item.key = item.key;
     new_node->item.value = deep_copy_value(item.value, item.value_size);
