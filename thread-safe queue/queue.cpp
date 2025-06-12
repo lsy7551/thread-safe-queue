@@ -85,7 +85,8 @@ Reply enqueue(Queue* queue, Item item) {
     reply.item.value_size = item.value_size;
     return reply;
 }
-
+// 최소 key값을 가진 노드를 큐에서 제거하고 반환
+// 큐가 비어 있으면 실패 응답을 반환
 Reply dequeue(Queue* queue) {
     Reply reply;
     reply.success = false;
