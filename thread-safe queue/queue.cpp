@@ -109,6 +109,8 @@ Reply dequeue(Queue* queue) {
     return reply;
 }
 
+// 주어진 범위에 해당하는 노드만 복사
+// 복사된 노드들로 새로운 큐를 생성하여 반환
 Queue* range(Queue* queue, Key start, Key end) {
     Queue* result = init();
     std::lock_guard<std::mutex> lock(queue->mtx);
@@ -120,7 +122,7 @@ Queue* range(Queue* queue, Key start, Key end) {
             copy.key = curr->item.key;
             copy.value_size = curr->item.value_size;
             copy.value = deep_copy_value(curr->item.value, copy.value_size);
-            enqueue(result, copy);
+            enqueue(result, copy); // 새 큐에 삽입
         }
         curr = curr->next;
     }
